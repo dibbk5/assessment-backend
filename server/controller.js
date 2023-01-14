@@ -13,7 +13,7 @@ let fortunes = [
     fortune: "A faithful friend is a strong defense.",
   },
 ];
-const fortuneID = 4;
+let fortuneID = 4;
 
 module.exports = {
   getCompliment: (req, res) => {
@@ -28,6 +28,10 @@ module.exports = {
     let randomCompliment = compliments[randomIndex];
 
     res.status(200).send(randomCompliment);
+  },
+
+  getAllFortunes: (req, res) => {
+    res.status(200).send(fortunes);
   },
 
   getFortune: (req, res) => {
