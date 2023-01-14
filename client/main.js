@@ -21,7 +21,7 @@ const getCompliment = () => {
 
 //get random fortune
 const getFortune = () => {
-  axios.get("http://localhost:4000/api/fortune/").then((res) => {
+  axios.get("http://localhost:4000/api/random/").then((res) => {
     const data = res.data;
     alert(data);
   });
@@ -30,6 +30,13 @@ const getFortune = () => {
 //add a fortune to the fortune list
 const createFortune = (body) => {
   axios.post("http://localhost:4000/api/fortune/", body).then(fortunesCallback);
+};
+
+//delete a fortune
+const deleteFortune = (id) => {
+  axios
+    .delete(`http://localhost:4000/api/fortune/${id}`)
+    .then(fortunesCallback);
 };
 
 //handle input
@@ -45,12 +52,14 @@ const submitHandler = (e) => {
   createFortune(bodyObj);
 };
 
+//add to view
 const addToView = (dataArr) => {
   newSection.innerHTML = ``;
   for (let i = 0; i < dataArr.length; i++) {
     let fortuneCard = dataArr[i].fortune;
     let newLine = document.createElement("div");
-    newLine.innerHTML = `<p> ${fortuneCard} </p>`;
+    newLine.innerHTML = `<p> ${fortuneCard} </p>
+        <button onclick="deleteFortune(${dataArr[i].id})">delete</button>`;
     newLine.id = "fortune";
     newSection.appendChild(newLine);
   }
@@ -60,3 +69,5 @@ complimentBtn.addEventListener("click", getCompliment);
 fortuneBtn.addEventListener("click", getFortune);
 allFortuneBtn.addEventListener("click", getAllFortunes);
 form.addEventListener("submit", submitHandler);
+
+// getAllFortunes();

@@ -35,8 +35,9 @@ module.exports = {
   },
 
   getFortune: (req, res) => {
-    let randomIndex = Math.floor(Math.random() * fortunes.length);
-    let randomFortune = fortunes[randomIndex].fortune;
+    let newArr = fortunes;
+    let randomIndex = Math.floor(Math.random() * newArr.length);
+    let randomFortune = newArr[randomIndex].fortune;
 
     res.status(200).send(randomFortune);
   },
@@ -55,6 +56,15 @@ module.exports = {
 
     fortunes.push(newFortune);
     fortuneID += 1;
+    res.status(200).send(fortunes);
+  },
+
+  deleteFortune: (req, res) => {
+    let indexFortune = fortunes.findIndex(
+      (fortune) => fortune.id === +req.params.id
+    );
+    fortunes.splice(indexFortune, 1);
+
     res.status(200).send(fortunes);
   },
 };
